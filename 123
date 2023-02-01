@@ -35,10 +35,10 @@ class run_new():
         while True:
             q = queue.Queue()
             response = requests.post("https://www.gate.io/json_svr/exchange/?u=1&c=782289", data=self.data, headers=self.headers)
-            cing = str(response.json())
-            q.put(cing)
+            print(response.json())
+            q.put(response)
             q.task_done()
-            print(cing)
+            q.get()
     def start(self):
         threads = []
         for x in range(self.num_thread):
