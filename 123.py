@@ -6,9 +6,9 @@ import queue
 
 class run_new:
     q = queue.Queue(300)
-    buy = float(2.00000)  # 买入价格
-    num = float(1.0000)  # 买入数量
-    num_thread = 20  # 线程数量 运行次数
+    buy = float(0.00250)  # 买入价格
+    num = float(500.0000)  # 买入数量
+    num_thread = 40  # 线程数量 运行次数
     response = None
     cookie = "lang=cn; curr_fiat=CNY; _dx_uzZo5y=1e0a7ceb5aa0c9744cecf1b4d91bdc8bd0f89026e43a4337d669956912b9de8444fd1afd; finger_print=63d873b32JSFubqpy5EOFfilqUJnRtJW3LISQKl1; _ym_d=1675129781; _ym_uid=1675129781437788748; ch=null; uid=13015332; nickname=a0098aau%40163.com; is_on=1; csrftoken=5af9f0a2a5a5ba7b7ef2222d1f3dd34447d59745c14382e5; is_portfolio_margin_account_13015332=0; is_portfolio_margin_switch_status_13015332=0; c2crisktip=1; b_notify=1; pver=a50ece15864fe15647c0610ae0d7b947; defaultP2PFiat=VND; notify_close=totp; market_title=usdt; login_notice_check=%2F; lasturl=%2Ftrade%2FVGX_USDT; AWSALB=TZLSYd7b8MahS9rSZz9m25kqB5wAtbBa2PoLM8Jd746Ul1Aa3cXRMh67BXDwpErt2joNpeIlEfHROdB1cx/ZrOi7Ku3Yyqo3dwE090Av8V1/C9TQgQMant/NEDri; AWSALBCORS=TZLSYd7b8MahS9rSZz9m25kqB5wAtbBa2PoLM8Jd746Ul1Aa3cXRMh67BXDwpErt2joNpeIlEfHROdB1cx/ZrOi7Ku3Yyqo3dwE090Av8V1/C9TQgQMant/NEDri"
     headers = {
@@ -45,7 +45,7 @@ class run_new:
             except ValueError:
                 print("出现异常")
             finally:
-                time.sleep(0.1)
+                time.sleep(0.02)
 
     # 生产线程
     def start(self):
@@ -54,12 +54,11 @@ class run_new:
             t = threading.Thread(target=self.hick_ht, daemon=True)
             threads.append(t)
             t.start()
-            time.sleep(0.1)
+            time.sleep(0.02)
 
     # 打印
     def qu(self):
-        w = self.q.get()
-        print(w)
+        print(time.strftime('%Y-%m-%d %H:%M:%S'), self.q.get())
         self.q.task_done()
 
     # 打印线程
@@ -67,7 +66,8 @@ class run_new:
         for x in range(self.num_thread):
             t = threading.Thread(target=self.qu)
             t.start()
-            time.sleep(0.1)
+            time.sleep(0.03)
+
 
 while True:
     time.sleep(0.1)
@@ -75,3 +75,5 @@ while True:
     run.start()
     run.start_1()
     time.sleep(0.3)
+
+# run = run_new()
